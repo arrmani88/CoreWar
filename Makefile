@@ -6,34 +6,34 @@
 #    By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/10 10:49:30 by anel-bou          #+#    #+#              #
-#    Updated: 2021/01/10 12:57:14 by anel-bou         ###   ########.fr        #
+#    Updated: 2021/01/10 17:46:44 by anel-bou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = corewar.a
+NAME = asm
+LIB_COREWAR = corewar.a
 LIBFT = libft/libft.a
 FLAGS = #-Wall -Werror -Wextra
 CC = gcc
-_OBJ = main.o
-INC = headers/
-OBJS_DIR = objs
-OBJ = $(addprefix $(OBJS_DIR)/, ${_OBJ})
+OBJ = srcs/main.o srcs/isInputCorrect.o
+INC_DIR = headers/
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT) headers/corewar.h
-	@ar rc $(NAME) $(OBJ) $(LIBFT)
-	@ranlib $(NAME)
-	@gcc srcs/main.c $(NAME) -o asm
+$(NAME): $(LIBFT) $(LIB_COREWAR)
+	@gcc srcs/main.c  $(LIB_COREWAR) $(LIBFT) -o $(NAME)
+	
+$(LIB_COREWAR): $(OBJ) corewar.h
+	@ar rc $(LIB_COREWAR) $(OBJ)
+	@ranlib $(LIB_COREWAR)
 
-$(OBJ): $(OBJS_DIR)/%.o : srcs/%.c  headers/corewar.h | $(OBJS_DIR)
-	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -c $< -o $@ -I. -Iheaders/
+%.o : %.c
+	@$(CC) -c $< -o $@
 
-$(OBJS_DIR):
-	mkdir $(OBJS_DIR);
+$(LIBFT): force
+	@make -C libft/
 
-$(LIBFT):
-	@make -C libft
+force:
+
 clean:
 	@rm -f $(OBJ)
 	@make clean -C libft/
@@ -44,3 +44,5 @@ fclean: clean
 	@make fclean -C libft/
 
 re: fclean all
+
+.PHONY: force fclean clean re all

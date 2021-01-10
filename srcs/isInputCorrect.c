@@ -6,11 +6,11 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 11:52:54 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/10 12:37:14 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/10 15:07:27 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "../corewar.h"
 
 int	isInputCorrect(char *s)
 {
