@@ -1,0 +1,72 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    MKF                                                :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/08/16 23:27:11 by vanderwolk        #+#    #+#              #
+#    Updated: 2021/01/10 12:48:46 by anel-bou         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#   variables                                                                  #
+# **************************************************************************** #
+# name
+NAME = minishell
+LIBFT = libft/libft.a
+# compilation variables
+CFLAGS = -Wall -Wextra -Werror -g
+CC = gcc
+# objects                                                                      #
+MINISHELL_INC = src/minishell.h src/built_in/built_in.h
+MINISHELL = main.o \
+    built_in/cd.o built_in/pwd.o built_in/env.o built_in/env_tools.o built_in/env_ops.o\
+    built_in/run_built_in.o built_in/echo.o built_in/exit.o\
+    core/split_args.o core/create_args_tab.o core/check_quotes.o core/read_cmd.o \
+    core/expansion.o core/run_executable.o core/util.o
+MINISHELL_OBJS = $(addprefix $(OBJS_DIR)/, ${MINISHELL})
+# objects directory
+OBJS_DIR = objs
+# Colors
+BLACK   = \033[30m
+RED     = \033[31m
+GREEN   = \033[32m
+YELLOW  = \033[93m
+BLUE    = \033[34m
+MAGENTA = \033[35m
+CYAN    = \033[36m
+WHITE   = \033[37m
+RESET   = \033[0m
+# **************************************************************************** #
+#   rules                                                                      #
+# **************************************************************************** #
+all: libft $(NAME)
+$(NAME): $(MINISHELL_OBJS) $(LIBFT)
+    @$(CC) -o $(NAME) $(MINISHELL_OBJS) $(LIBFT)
+    @echo "$(GREEN)program$(RESET) $(NAME): $(GREEN)UPDATED!$(RESET)";
+libft:
+    @make -C libft/
+$(MINISHELL_OBJS): $(OBJS_DIR)/%.o : src/%.c $(MINISHELL_INC) | $(OBJS_DIR)
+    @mkdir -p $(dir $@)
+    @$(CC) $(CFLAGS) -c $< -o $@ -I src/
+    @echo "$(YELLOW)OBJ$(RESET) $<: $(YELLOW)UPDATED!$(RESET)";
+$(OBJS_DIR):
+    @if [ ! -d $(OBJS_DIR) ]; then \
+        echo "$(CYAN)DIR$(RESET) $(OBJS_DIR)/: $(CYAN)CREATED!$(RESET)"; \
+        mkdir $(OBJS_DIR); \
+    fi;
+clean:
+    make fclean -C libft/
+    @if [ -d $(OBJS_DIR) ]; then \
+        echo "$(RED)OBJ$(RESET) minishell objs: $(RED)REMOVED!$(RESET)"; \
+        rm -rf $(OBJS_DIR); \
+    fi;
+fclean: clean
+    make fclean -C libft/
+    @if [ -f $(NAME) ]; then \
+        echo "$(RED)program$(RESET) $(NAME): $(RED)REMOVED!$(RESET)"; \
+        rm -f $(NAME); \
+    fi;
+re: fclean all
+.PHONY: all clean fclean re libft
