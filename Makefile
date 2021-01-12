@@ -1,48 +1,44 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/01/10 10:49:30 by anel-bou          #+#    #+#              #
-#    Updated: 2021/01/10 17:46:44 by anel-bou         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = asm
-LIB_COREWAR = corewar.a
-LIBFT = libft/libft.a
-FLAGS = #-Wall -Werror -Wextra
+LIBFT_FILE = libft.a
+
+LIBFT_DIR = ./libft
+ASSEMBLY_DIR = ./src/assembly
+INC_DIR = ./includes/
+LIBFT_INC = $(LIBFT_DIR)/
+OBJ_DIR = ./obj
+
+LFLAG = 
+
+LIBFT = $(LIBFT_DIR)/$(LIBFT_FILE)
+
+HEADERS = $(INC_DIR)corewar.h $(INC_DIR)op.h 
+
+ASSEMBLY_FILES = asm.c is_input_correct.c main.c op.c convert_file.o
+
+OBJ_ASSEMBLY = $(addprefix $(OBJ_DIR)/, $(ASSEMBLY_FILES:%.c=%.o))
+
 CC = gcc
-OBJ = srcs/main.o srcs/isInputCorrect.o
-INC_DIR = headers/
+CFLAGS = -g #-Wall -Werror -Wextra 
+INC = -I $(INC_DIR) -I $(LIBFT_INC)
+
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(LIB_COREWAR)
-	@gcc srcs/main.c  $(LIB_COREWAR) $(LIBFT) -o $(NAME)
-	
-$(LIB_COREWAR): $(OBJ) corewar.h
-	@ar rc $(LIB_COREWAR) $(OBJ)
-	@ranlib $(LIB_COREWAR)
+$(OBJ_DIR)/%.o: $(ASSEMBLY_DIR)/%.c $(HEADERS)
+	@$(CC) $(CFLAGS) -c $(INC) $< -o $@
 
-%.o : %.c
-	@$(CC) -c $< -o $@
+$(OBJ_DIR):
+	@mkdir $(OBJ_DIR)
 
-$(LIBFT): force
-	@make -C libft/
-
-force:
+$(NAME): $(OBJ_DIR) $(OBJ_ASSEMBLY)
+	@make -C $(LIBFT_DIR)
+	@$(CC) $(OBJ_ASSEMBLY) $(LIBFT) $(LFLAG) -o $(NAME)
 
 clean:
-	@rm -f $(OBJ)
-	@make clean -C libft/
+	@rm -rf $(OBJ_DIR)
+	@make -C $(LIBFT_DIR) clean
 
 fclean: clean
-	@rm -f $(NAME)
-	@rm -rf asm
-	@make fclean -C libft/
+	@rm -rf $(NAME)
+	@make -C $(LIBFT_DIR) fclean
 
 re: fclean all
-
-.PHONY: force fclean clean re all

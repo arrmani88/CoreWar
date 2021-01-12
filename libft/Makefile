@@ -6,7 +6,7 @@
 #    By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 11:22:12 by anel-bou          #+#    #+#              #
-#    Updated: 2021/01/10 11:35:17 by anel-bou         ###   ########.fr        #
+#    Updated: 2021/01/12 17:47:24 by anel-bou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,10 +95,12 @@ OBJ = ft_abs.o\
 		ft_table3_len.o\
 		ft_tolower.o\
 		ft_toupper.o\
+		str_begins_with.o\
+		get_next_line.o
 
 all: $(NAME)
 
-$(NAME): $(OBJ) libft.h
+$(NAME): $(OBJ) libft.h get_next_line.h
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
 

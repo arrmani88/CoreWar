@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 09:52:33 by anel-bou          #+#    #+#             */
-/*   Updated: 2019/12/20 16:57:22 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/12 17:48:05 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
+# include "get_next_line.h"
 
 typedef	struct		s_list
 {
@@ -118,5 +119,6 @@ void				ft_lstadd_end(t_list **alst, t_list *new);
 int					ft_lstsize(t_list *alst);
 char				*ft_strnjoin(char const *s1, char const *s2, int n);
 char				*ft_strstock(char *dst, char *src1, char *src2);
+int					str_begins_with(char *str, char *begin_part);
 
 #endif
