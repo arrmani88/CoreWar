@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:35 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/12 19:27:41 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/13 16:03:28 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,16 @@ void	write_beginning_data(t_env *env)
 {
 	int			i;
 	int			execSize;
-	
+
 	env->hdr.magic = ((COREWAR_EXEC_MAGIC&0xff)<<24) |
 			(COREWAR_EXEC_MAGIC<<8&0xff0000) | (COREWAR_EXEC_MAGIC>>8&0xff00);
 	i = -1;
 	while (++i <= PROG_NAME_LENGTH)
 		env->hdr.prog_name[i] = 0;
 	ft_strcpy(env->hdr.prog_name, "nVnCIBLE,,,,,,,,,,,,,,,,,,,");
+
 	env->hdr.prog_size = lseek(env->src_file, 0, SEEK_END);
+
 	i = -1;
 	while (++i < COMMENT_LENGTH + 1)
 		env->hdr.comment[i] = 0;
@@ -94,7 +96,7 @@ int     main(int ac, char **av)
 		initialize_data(&env);
 		if (!is_input_correct(av[ac - 1]) || (create_and_initialize_file("qwer.s", env) == -1))
 			return (0);
-		write_beginning_data(env);
+	// 	write_beginning_data(env);
 		convert_file(env);
 	}
 	return (0);
