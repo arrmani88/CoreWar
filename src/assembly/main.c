@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:35 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/14 18:04:03 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/14 18:59:30 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,15 @@ int     main(int ac, char **av)
 	// }
 	
 	
-	two_s_complement_conv((short int)252);
+	two_s_complement_conv((short int)1235);
 	return (0);
 }
+
+
+
+
+
+
 
 
 
