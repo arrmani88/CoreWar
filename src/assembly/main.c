@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:35 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/14 18:59:30 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/15 10:17:11 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,18 @@ void	initialize_data(t_env **env)
 
 int     main(int ac, char **av)
 {
-	// t_env *env;
+	t_env *env;
 	
-	// if (ac > 1 || 1) 
-	// {
-	// 	initialize_data(&env);
-	// 	if (!is_input_correct(av[ac - 1]) || (create_and_initialize_file("qwer.s", env) == -1))
-	// 		return (0);
-	// 	convert_file(env);
-	// }
+	if (ac > 1 || 1) 
+	{
+		initialize_data(&env);
+		if (!is_input_correct(av[ac - 1]) || (create_and_initialize_file("qwer.s", env) == -1))
+			return (0);
+		convert_file(env);
+	}
 	
-	
-	two_s_complement_conv((short int)1235);
+
+	// printf("# %d #\n", (unsigned short int)-19);
 	return (0);
 }
 

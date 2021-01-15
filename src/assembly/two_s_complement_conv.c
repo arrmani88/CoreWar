@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 16:01:34 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/14 19:00:50 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/15 11:08:15 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int			get_first_true_bit(short int n)
 	
 	shf = 1;
 	firsttruebit = 0;
-	while (shf <= 32768)
+	while (shf <= 0x8000)
 	{
 		firsttruebit++;
 		if (n & shf)
@@ -31,23 +31,25 @@ int			get_first_true_bit(short int n)
 
 short int	two_s_complement_conv(short int n)
 {
-	short int	res;
-	int			firsttruebit;
+	unsigned short int	res;
+	int			true_bits;
 
-	firsttruebit = get_first_true_bit(n) ;
+	true_bits = 16 - get_first_true_bit(n);
+	printf("1st=%d\n", true_bits);
 	res = 0;
-	while (!(res & 32768))
+	while (!(res & 0x8000))
 	{
-		if (firsttruebit-- >= 0)
+		if (true_bits-- > 0)
 		{
 			res = res | 1;
 			printf("1");
-			// firsttruebit--;
+			// true_bits--;
 		}
 		else 
 			printf("0");
 		res  = res << 1;
 	}
-	printf("\n....%d....\n", n^res);
+	printf("\nmatcher= [%u]\n", res);
+	printf("final=   [%u]\n", (short int)(n^res));
 	return (n ^ res);
 }
