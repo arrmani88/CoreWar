@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 09:52:33 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/12 17:48:05 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/15 17:40:55 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,7 @@ int					ft_lstsize(t_list *alst);
 char				*ft_strnjoin(char const *s1, char const *s2, int n);
 char				*ft_strstock(char *dst, char *src1, char *src2);
 int					str_begins_with(char *str, char *begin_part);
+int					is_char_in_str(char c, char *str);
+
 
 #endif

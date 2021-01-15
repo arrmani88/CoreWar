@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:57 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/15 10:16:00 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/15 19:07:03 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 #include "op.h"
 #include <fcntl.h>
 #include <unistd.h>
+#include <limits.h>
 
 
 #include <stdio.h>
-#include <limits.h>
 
 typedef struct  s_env
 {

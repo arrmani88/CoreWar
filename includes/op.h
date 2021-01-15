@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2021/01/12 15:08:05 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/15 15:40:49 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 #define IDX_MOD					(MEM_SIZE / 8)
 #define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
 
+#define ALT_COMMENT_CHAR		';'
 #define COMMENT_CHAR			'#'
 #define LABEL_CHAR				':'
 #define DIRECT_CHAR				'%'
