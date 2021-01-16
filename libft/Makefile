@@ -96,6 +96,7 @@ OBJ = ft_abs.o\
 		ft_tolower.o\
 		ft_toupper.o\
 		str_begins_with.o\
+		is_char_in_str.o\
 		get_next_line.o
 
 all: $(NAME)

@@ -42,62 +42,25 @@ int		get_first_char_index(char *str)
 
 
 
-int		is_label(t_env *env, char *str)
-{
-	int i;
-	int j;
-
-	i = -1;
-	while (str[++i] && str[i] != ':')
-	{
-		j = -1;
-		while (LABEL_CHARS[++j] && str[i] != LABEL_CHARS[j])
-			;
-		if (LABEL_CHARS[j] == 0)
-			return(0);
-	}
-	if (str[i] == 0 || i == 0)
-		return (0);
-	if (is_operation(&str[++i]))
-		write_operation(env, str);
-		
-	return (1);
-}
-
-int		is_operation(char *line)
-{
-	int i;
-
-	i = get_first_char_index(line);
-	while (line[i++] && line[i++] != ':')
-		if (!(is_char_in_str(line[i], LABEL_CHARS)))
-			return (0);
-	if (line[i] != ':')
-		return (0);
-	if (line[++i] == '%' || line[i] == 'r' || (line[i] >= '0' && line[i] <= '9'))
-		return (1);
-	return(0);
-}
-
-int		get_opertation_code(char *line)
+int		get_operation_code(char *line)
 {
 	int		op_code;
 
 	op_code = 0;
-	(!op_code && str_begins_with(line, "live")) ? op_code = 0x01 : 0;
+	(!op_code && str_begins_with(line, "lldi")) ? op_code = 0x0e : 0;
+	(!op_code && str_begins_with(line, "lld")) ? op_code = 0x0d : 0;
+	(!op_code && str_begins_with(line, "ldi")) ? op_code = 0x0a : 0;
 	(!op_code && str_begins_with(line, "ld")) ? op_code = 0x02 : 0;
+	(!op_code && str_begins_with(line, "sti")) ? op_code = 0x0b : 0;
 	(!op_code && str_begins_with(line, "st")) ? op_code = 0x03 : 0;
+	(!op_code && str_begins_with(line, "live")) ? op_code = 0x01 : 0;
 	(!op_code && str_begins_with(line, "add")) ? op_code = 0x04 : 0;
 	(!op_code && str_begins_with(line, "sub")) ? op_code = 0x05 : 0;
 	(!op_code && str_begins_with(line, "and")) ? op_code = 0x06 : 0;
 	(!op_code && str_begins_with(line, "or")) ? op_code = 0x07 : 0;
 	(!op_code && str_begins_with(line, "xor")) ? op_code = 0x08 : 0;
 	(!op_code && str_begins_with(line, "zjmp")) ? op_code = 0x09 : 0;
-	(!op_code && str_begins_with(line, "ldi")) ? op_code = 0x0a : 0;
-	(!op_code && str_begins_with(line, "sti")) ? op_code = 0x0b : 0;
 	(!op_code && str_begins_with(line, "fork")) ? op_code = 0x0c : 0;
-	(!op_code && str_begins_with(line, "lld")) ? op_code = 0x0d : 0;
-	(!op_code && str_begins_with(line, "lldi")) ? op_code = 0x0e : 0;
 	(!op_code && str_begins_with(line, "lfork")) ? op_code = 0x0f : 0;
 	(!op_code && str_begins_with(line, "aff")) ? op_code =  0x010: 0;
 	return (op_code);
@@ -120,7 +83,7 @@ int		get_current_argument_code(char *line)
 
 char	set_args_octet(char *line)
 {
-	char	oct;
+	unsigned char	oct;
 	int		i;
 	int		shf;
 
@@ -129,16 +92,24 @@ char	set_args_octet(char *line)
 	shf = 6;
 	while (line[++i] && shf)
 	{
+		// printf("|%d|", i);
 		if (line[i] == 'r' || line[i] == '%' ||
-					line[i] == ':' || (line[i] <= '0' && line[i] >= '9'))
-			oct = oct & (get_current_argument_code(&line[i]) << shf);
-		shf -= 2;
+				((line[i] == ':' && i < 0 && line[i-1] != '%')
+				|| (line[i] == ':' && i == 0)) ||
+				(line[i] <= '0' && line[i] >= '9'))
+		{
+			// printf("oc()=[%d]", get_current_argument_code(&line[i]));
+			oct = oct | (get_current_argument_code(&line[i]) << shf);
+			// printf(" curr_oct=%u\n", oct);
+			shf -= 2;
+		}
 	}
-
-
+	printf("\noctet=[%u]\n", oct);
+	return (oct);
 }
 
-void	write_operation(t_env *env, char *line)
+// void	write_operation(t_env *env, char *line)
+void	write_operation(char *line)
 {
 	int		i;
 	int		op_code;
@@ -155,7 +126,44 @@ void	write_operation(t_env *env, char *line)
 	
 
 	
-	return ;
+}
+
+int		is_operation(char *line)
+{
+	int i;
+
+	i = get_first_char_index(line);
+	while (line[i++] && line[i++] != ':')
+		if (!(is_char_in_str(line[i], LABEL_CHARS)))
+			return (0);
+	if (line[i] != ':')
+		return (0);
+	if (line[++i] == '%' || line[i] == 'r' || (line[i] >= '0' && line[i] <= '9'))
+		return (1);
+	return(0);
+}
+
+int		is_label(t_env *env, char *str)
+{
+	int i;
+	int j;
+
+	i = -1;
+	while (str[++i] && str[i] != ':')
+	{
+		j = -1;
+		while (LABEL_CHARS[++j] && str[i] != LABEL_CHARS[j])
+			;
+		if (LABEL_CHARS[j] == 0)
+			return(0);
+	}
+	if (str[i] == 0 || i == 0)
+		return (0);
+	if (is_operation(&str[++i]))
+		write_operation(str);
+		// write_operation(env, str);
+		
+	return (1);
 }
 
 void	translate_code(t_env *env)
@@ -172,7 +180,8 @@ void	translate_code(t_env *env)
 				get_next_line(env->src_file, &line);
 			}
 			if (is_operation(line))
-				write_operation(env, line);
+				write_operation(line);
+				// write_operation(env, line);
 		}
 		ft_memdel((void**)&line);
 	}
