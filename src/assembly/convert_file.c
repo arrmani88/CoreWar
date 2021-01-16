@@ -110,9 +110,9 @@ int		is_args_octet_present(int op)
 
 int		get_current_argument_code(char *line)
 {
-	if (line[i] == 'r')
+	if (line[0] == 'r')
 		return (0b01);
-	else if (line[i] == '%')
+	else if (line[0] == '%')
 		return (0b10);
 	else
 		return (0b11);
@@ -129,7 +129,8 @@ char	set_args_octet(char *line)
 	shf = 6;
 	while (line[++i] && shf)
 	{
-		if (line[i] == 'r' || line[i] == '%' || line[i] ==         ) /*l7arf lowwl dial argum*/
+		if (line[i] == 'r' || line[i] == '%' ||
+					line[i] == ':' || (line[i] <= '0' && line[i] >= '9'))
 			oct = oct & (get_current_argument_code(&line[i]) << shf);
 		shf -= 2;
 	}
