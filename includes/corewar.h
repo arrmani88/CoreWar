@@ -35,7 +35,8 @@ void    set_champ_name(t_env *env, char *str);
 short int	two_s_complement_conv(short int n);
 void	write_initial_data(t_env *env);
 void    set_initial_data(t_env *env);
-
 void	write_operation(char *line);
+int		get_first_char_index(char *str);
+
 
 #endif  

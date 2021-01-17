@@ -65,16 +65,13 @@ int     main(int ac, char **av)
 {
 	t_env *env;
 	
-	// if (ac > 1 || 1) 
-	// {
-	// 	initialize_data(&env);
-	// 	if (!is_input_correct(av[ac - 1]) || (create_file("qwer.s", env) == -1))
-	// 		return (0);
-	// 	convert_file(env);
-	// }
-	printf("/******************/\n");
-	char *p = "        live \%0";
-	write_operation(p);
+	if (ac > 1 || 1) 
+	{
+		initialize_data(&env);
+		if (!is_input_correct(av[ac - 1]) || (create_file("qwer.s", env) == -1))
+			return (0);
+		convert_file(env);
+	}
 	return (0);
 }
 
