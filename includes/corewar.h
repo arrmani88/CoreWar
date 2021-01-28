@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:57 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/28 09:24:12 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/28 17:08:48 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,37 @@
 
 #include <stdio.h>
 
-typedef struct	s_op
+typedef struct	s_data
 {
 	char *line;
-	/*********/
-	struct s_op	*next;
-}				t_op;
+	struct s_data *next;
+}				t_data;
 
-typedef struct	s_label
+typedef struct		s_opr
 {
-	t_op			*op;
-	struct s_label	*next;
-}				t_label;
+	char	*line;
+	char	opr_code;
+	char	enc_octet;
+
+	int		arg1;
+	int		arg2;
+	int		arg3;
+
+	char	cast1;
+	char	cast2;
+	char	cast3;
+	
+	int		opr_size;
+	struct s_opr	*next;
+
+}				t_opr;
 
 typedef struct	s_env
 {
 	header_t	hdr;
-	t_label		*label;
-    int			src_file;
+	t_data		*data;
+	t_opr		*opr;
+	int			src_file;
 	int			dst_file;
 }				t_env;
 

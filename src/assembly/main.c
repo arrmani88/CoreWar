@@ -6,12 +6,50 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:35 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/28 09:22:34 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/28 19:40:26 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/corewar.h"
 
+void	initialize_data(t_env **env)
+{
+	(*env) = (t_env *)ft_memalloc(sizeof(t_env));
+	(*env)->data = (t_data *)ft_memalloc(sizeof(t_data));
+}
+
+int     main(int ac, char **av)
+{
+	t_env *env;
+
+	if (ac > 1)
+	{
+		initialize_data(&env);
+		convert_file(env);
+	}
+	return (0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/************************************/
 int     getLastDotIndex(char *s)
 {
 	int i;
@@ -38,8 +76,7 @@ char *getFileName(char *s)
 	fileName = ft_strjoin(ft_strsub(s, 0, getLastDotIndex(s)), ".cor");
 	return (fileName);
 }
-
-
+	
 int	create_file(char *s, t_env *env)
 {
 	char *exec_name;
@@ -57,37 +94,8 @@ int	create_file(char *s, t_env *env)
 	return (0);
 }
 
-void	initialize_data(t_env **env)
-{
-	*env = (t_env *)ft_memalloc(sizeof(t_env));
-	(*env)->label 
-}
-
-int     main(int ac, char **av)
-{
-	t_env *env;
-
-	if (ac > 1 || 1)
-	{
-		initialize_data(&env);
-		if (!is_input_correct(av[ac - 1]) || (create_file("qwer.s", env) == -1))
-			return (0);
-		convert_file(env);
-	}
-	return (0);
-}
 
 
-
-
-
-
-
-
-
-
-
-	
 	// printf("# %d #\n", (unsigned short int)-19);
 /**************************************************************/
 
