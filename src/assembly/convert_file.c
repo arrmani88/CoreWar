@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 19:27:56 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/15 19:36:51 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/28 09:14:53 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@ int		is_operation(char *line)
 	int i;
 
 	i = get_first_char_index(line);
-	while (line[i++] && line[i++] != ':')
-		if (!(is_char_in_str(line[i], LABEL_CHARS)))
+	while (line[i] && line[i] != ' '){
+		if (!(is_char_in_str(line[i++], LABEL_CHARS)))
 			return (0);
-	if (line[i] != ':')
+	}
+	if (line[i] != ' ')
 		return (0);
-	if (line[++i] == '%' || line[i] == 'r' || (line[i] >= '0' && line[i] <= '9'))
-		return (1);
+	if (line[++i] == '%' || line[i] == 'r' || (line[i] >= '0' && line[i] <= '9')){
+		return (1);}
 	return(0);
 }
 
@@ -60,29 +61,20 @@ int		is_label(t_env *env, char *str)
 		return (0);
 	if (is_operation(&str[++i]))
 		write_operation(str);
-		// write_operation(env, str);
 		
 	return (1);
 }
 
-void	translate_code(t_env *env)
+void	parse_data(t_env *env)
 {
 	char *line;
-	
+
 	while (get_next_line(env->src_file, &line))
 	{
 		if (is_label(env, line))
-		{
-			while (is_empty_line(line))
-			{
-				ft_memdel((void**)&line);
-				get_next_line(env->src_file, &line);
-			}
-			if (is_operation(line))
-				write_operation(line);
-				// write_operation(env, line);
-		}
-		ft_memdel((void**)&line);
+			get_next_line(env->src_file, &line);
+		if (is_operation(line))
+			write_operation(line);
 	}
 }
 
@@ -90,5 +82,5 @@ void	convert_file(t_env *env)
 {
 	set_initial_data(env);
 	write_initial_data(env);
-	translate_code(env);
+	parse_data(env);
 }

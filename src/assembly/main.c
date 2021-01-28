@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:35 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/15 19:24:02 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/28 09:22:34 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int	create_file(char *s, t_env *env)
 	}
 	exec_name = getFileName(s);
 	ft_putstr("Writing output program to ");
-	ft_putendl(exec_name);
+	ft_putstr(exec_name);
+	ft_putendl(" ...");
 	env->dst_file = open(exec_name, O_WRONLY | O_CREAT | O_TRUNC , 0644);
 	return (0);
 }
@@ -59,13 +60,14 @@ int	create_file(char *s, t_env *env)
 void	initialize_data(t_env **env)
 {
 	*env = (t_env *)ft_memalloc(sizeof(t_env));
+	(*env)->label 
 }
 
 int     main(int ac, char **av)
 {
 	t_env *env;
-	
-	if (ac > 1 || 1) 
+
+	if (ac > 1 || 1)
 	{
 		initialize_data(&env);
 		if (!is_input_correct(av[ac - 1]) || (create_file("qwer.s", env) == -1))
@@ -75,7 +77,6 @@ int     main(int ac, char **av)
 	return (0);
 }
 
-// 10 00 00 00
 
 
 
