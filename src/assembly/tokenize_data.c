@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 09:12:14 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/29 12:37:17 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/29 19:25:26 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		get_next_argum_index(char *line, int i)
 	{
 		if (is_arg_first_char(line, i))
 			return (i);
+		i++;
 	}
 	if (IS_COMMENT_CHAR(line[i]))
 		return (-1);
@@ -67,13 +68,10 @@ int		get_arguments_size(char *line, int opr)
 		if (i < 0)
 			break ;
 	}
-	
-	
-	
 	return (argums_size);
 }
 
-void	get_current_octet_number(t_env *env, char *line)
+int		get_operation_size(t_env *env, char *line)
 {
 	int i;
 	int opr_code;
@@ -84,17 +82,60 @@ void	get_current_octet_number(t_env *env, char *line)
 	opr_code = get_operation_code(&line[i]);
 	if (is_args_octet_present(opr_code))
 		opr_size++;
-	get_arguments_size(&line[i], opr_code);
-
-	
-
+	opr_size += get_arguments_size(&line[i], opr_code);
+	return (opr_size);
 }
+
+void	save_label_position(char *line, int current_bytes, t_env *env)
+{
+	int i;
+	int j;
+
+	j = -1;
+	while (IS_SPACE(line[++j]))
+		;
+	j = i - 1;
+	while (line[++i] && line[i] != LABEL_CHAR)
+		;
+/***************/
+	if (!env->label)
+	{
+		env->label = (t_label *)ft_memalloc(sizeof(t_label));
+		env->lbl = env->label;
+	}
+	else
+	{
+		env->lbl->next = (t_label *)ft_memalloc(sizeof(t_label));
+		env->lbl = env->lbl->next;
+	}
+	env->lbl->label_name = ft_strsub(line, j, i);
+	env->lbl->label_position = current_bytes;
+	
+}
+
+int		is_label_operation_in_same_line(char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i] && line[i] != LABEL_CHAR)
+		i++;
+	while (IS_SPACE(line[i]))
+		i++;
+	if (is_operation(&line[i]))
+		return (i);
+	return (0);
+}
+
 
 void	tokenize_data(t_env *env)
 {
 	t_data *data;
 	char *line;
+	int		current_bytes;
+	int i;
 
+	current_bytes = 0;
 	get_next_line(env->src_file, &line);
 	env->data->line = line;
 	data = env->data;
@@ -103,9 +144,18 @@ void	tokenize_data(t_env *env)
 		data->next = (t_data *)ft_memalloc(sizeof(t_data));
 		data = data->next;
 		data->line = line;
-		get_current_octet_number(env, line);
-
 		
+		if (is_label(line))
+		{
+			save_label_position(line, current_bytes, env);
+			if ((i = is_label_operation_in_same_line(line)) > 0)
+				current_bytes += get_operation_size(env, &line[i]);
+		}
+		else if (is_operation(line))
+			current_bytes += get_operation_size(env, line);
+
+		data->current_octets = current_bytes;
+
 
 	}
 }

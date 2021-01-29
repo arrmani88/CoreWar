@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initial_data.c                                     :+:      :+:    :+:   */
+/*   handle_name_comment.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 10:14:49 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/28 15:45:32 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/29 14:49:53 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ void	set_champ_comment(t_env *env, char *str)
 void    set_initial_data(t_env *env)
 {
 	char *line;
+
 	env->hdr.magic = env->hdr.magic = ((COREWAR_EXEC_MAGIC&0xff)<<24) |
 			(COREWAR_EXEC_MAGIC<<8&0xff0000) | (COREWAR_EXEC_MAGIC>>8&0xff00);
-	while(get_next_line(env->src_file, &line))
+	while(get_next_line(env->src_file, &line) > 0)
 	{
 		if (str_begins_with(line, NAME_CMD_STRING))
 			set_champ_name(env, line);

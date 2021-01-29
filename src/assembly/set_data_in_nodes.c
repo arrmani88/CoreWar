@@ -6,13 +6,13 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 09:20:59 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/29 12:45:22 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/29 15:15:35 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/corewar.h"
 
-void	set_pattern_in_nodes(t_opr *opr, char *line)
+void	fill_node_by_operation(t_opr *opr, char *line)
 {
 	int i;
 
@@ -54,7 +54,8 @@ void	set_data_in_nodes(t_env *env)
 	{
 		if (is_operation(data->line))
 			opr = get_current_opr_node(env, opr);
-			set_pattern_in_nodes(opr, data->line);
+			fill_node_by_operation(opr, data->line);
+		data = data->next;
 	}
 
 

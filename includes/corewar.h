@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:57 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/29 12:46:04 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/29 17:13:38 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,17 @@
 typedef struct	s_data
 {
 	char *line;
+	int		current_octets;
 	struct s_data *next;
 }				t_data;
+
+typedef struct s_label
+{
+	char			*label_name;
+	int				label_position;
+	struct s_label	*next;
+}				t_label;
+
 
 typedef struct		s_opr
 {
@@ -39,10 +48,6 @@ typedef struct		s_opr
 	int		arg1;
 	int		arg2;
 	int		arg3;
-
-	char	cast1;
-	char	cast2;
-	char	cast3;
 	
 	int		opr_size;
 	struct s_opr	*next;
@@ -54,9 +59,11 @@ typedef struct	s_env
 	header_t	hdr;
 	t_data		*data;
 	t_opr		*opr;
+	t_label		*label;
+	t_label		*lbl;
 	int			src_file;
 	int			dst_file;
-	int			readed_size;
+	int			current_size;
 }				t_env;
 
 short int	two_s_complement_conv(short int n);
@@ -68,7 +75,7 @@ int		get_first_char_index(char *str);
 void	tokenize_data(t_env *env);
 int		is_operation(char *line);
 int		is_empty_line(char *line);
-int		is_label(t_env *env, char *str);
+int		is_label(char *str);
 int		get_operation_code(char *line);
 int		is_arg_first_char(char *line, int i);
 void	set_data_in_nodes(t_env *env);
@@ -77,6 +84,7 @@ unsigned char	set_args_octet(char *line);
 
 
 
-int		get_arguments_size(char *line, int opr);
+// int		get_arguments_size(char *line, int opr);
+int		get_operation_size(t_env *env, char *line);
 
 #endif  
