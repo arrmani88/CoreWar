@@ -13,7 +13,7 @@ LIBFT = $(LIBFT_DIR)/$(LIBFT_FILE)
 
 HEADERS = $(INC_DIR)corewar.h $(INC_DIR)op.h 
 
-ASSEMBLY_FILES = asm.c is_input_correct.c main.c op.c convert_file.o two_s_complement_conv.o initial_data.o write_operation.o
+ASSEMBLY_FILES = is_input_correct.c main.c op.c two_s_complement_conv.c handle_name_comment.c write_operation.c tokenize_data.c set_data_in_nodes.c analyze_line.c 
 
 OBJ_ASSEMBLY = $(addprefix $(OBJ_DIR)/, $(ASSEMBLY_FILES:%.c=%.o))
 

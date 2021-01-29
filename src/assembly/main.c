@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:35 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/28 19:40:26 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/29 12:49:08 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,22 @@ void	initialize_data(t_env **env)
 
 int     main(int ac, char **av)
 {
-	t_env *env;
+	// t_env *env;
 
-	if (ac > 1)
-	{
-		initialize_data(&env);
-		convert_file(env);
-	}
+	// if (ac > 1)
+	// {
+	// 	initialize_data(&env);
+
+	// 	set_initial_data(env);
+	// 	// write_initial_data(env);
+	// 	tokenize_data(env);
+	// 	/* is_input_correct() */
+	// 	set_data_in_nodes(env);
+	// }
+	
+	int n;
+	n = get_arguments_size("sti r1, \%:live, \%1", 0x0b);
+	printf("size of Arguments=[%d]\n", n);
 	return (0);
 }
 
