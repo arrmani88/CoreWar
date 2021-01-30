@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 09:18:26 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/29 17:24:41 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/30 12:28:10 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		is_operation(char *line)
 	int i;
 
 	i = get_first_char_index(line);
-	while (line[i] && line[i] != ' ')
+	while (line[i] && !IS_SPACE(line[i]))
 		if (!(is_char_in_str(line[i++], LABEL_CHARS)))
 			return (0);
 	if (line[i] != ' ' || !line[i])

@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   write_operation.c                                  :+:      :+:    :+:   */
+/*   get_operation_info.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/12 19:27:56 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/29 11:57:52 by anel-bou         ###   ########.fr       */
+/*   Created: 2021/01/30 11:22:36 by anel-bou          #+#    #+#             */
+/*   Updated: 2021/01/30 11:33:27 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/corewar.h"
+
 
 int		get_first_char_index(char *str)
 {
@@ -46,52 +47,17 @@ int		get_operation_code(char *line)
 	return (op_code);
 }
 
-int		is_args_octet_present(int op)
+int		get_operation_size(t_env *env, char *line)
 {
-	return (op != 0x1 && op != 0x9 && op != 0xc && op != 0xf);
-}
+	int i;
+	int opr_code;
+	int	opr_size;
 
-int		get_current_argument_code(char *line)
-{
-	if (line[0] == 'r')
-		return (0b01);
-	else if (line[0] == '%')
-		return (0b10);
-	else
-		return (0b11);
-}
-
-unsigned char	set_args_octet(char *line)
-{
-	unsigned char	oct;
-	int				i;
-	int				shf;
-
-	oct = 0;
-	i = -1;
-	shf = 6;
-	while (line[++i] && shf)
-	{
-		if (is_arg_first_char(line, i))
-		{
-			oct = oct | (get_current_argument_code(&line[i]) << shf);
-			shf -= 2;
-		}
-	}
-	return (oct);
-}
-
-void	write_operation(char *line)
-{
-	int				i;
-	int				opr_code;
-	unsigned char	args_oct;
-
-	args_oct = 0;
+	opr_size = 1;
 	i = get_first_char_index(line);
 	opr_code = get_operation_code(&line[i]);
 	if (is_args_octet_present(opr_code))
-		args_oct = set_args_octet(&line[i]);
-
-
+		opr_size++;
+	opr_size += get_all_arguments_size(&line[i], opr_code);
+	return (opr_size);
 }

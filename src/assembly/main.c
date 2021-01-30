@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:35 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/29 16:51:36 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/30 12:18:27 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,22 @@ void	initialize_variables(t_env **env)
 
 int     main(int ac, char **av)
 {
-	t_env *env;
+	// t_env *env;
 
-	if (ac > 1 || 1)
-	{
-		initialize_variables(&env);
-		if (!open_file("qwer.s", env))
-			return (-1);
-		set_initial_data(env);
-		tokenize_data(env);
-		/* is_input_correct() */
-		set_data_in_nodes(env);
-	}
+	// if (ac > 1 || 1)
+	// {
+	// 	initialize_variables(&env);
+	// 	if (!open_file("qwer.s", env))
+	// 		return (-1);
+	// 	organize_beginning_data(env);
+	// 	tokenize_data(env);
+	// 	/* is_input_correct() */
+	// 	translate_data_to_bytes(env);
+	// }
+	int n = is_label_operation_in_same_line("zzzz:	ld	\%368,r2");
+	// int n = is_label_operation_in_same_line("looooop:  sti r1, \%:live, \%1");
+	printf(".:%d:.\n", n);
+
 	return (0);
 }
 

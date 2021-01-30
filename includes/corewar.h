@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:57 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/29 17:13:38 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/30 11:58:52 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,33 +58,37 @@ typedef struct	s_env
 {
 	header_t	hdr;
 	t_data		*data;
-	t_opr		*opr;
+	t_data		*dt;
 	t_label		*label;
 	t_label		*lbl;
+	t_opr		*opr;
 	int			src_file;
 	int			dst_file;
 	int			current_size;
 }				t_env;
 
-short int	two_s_complement_conv(short int n);
 
-int     is_input_correct(char *s);
-void	write_initial_data(t_env *env);
-void    set_initial_data(t_env *env);
+int		get_operation_code(char *line);
 int		get_first_char_index(char *str);
-void	tokenize_data(t_env *env);
+int		get_current_argument_code(char *line);
+int		get_operation_size(t_env *env, char *line);
+int		get_all_arguments_size(char *line, int opr);
+int		get_this_arg_size(char *line, int i, int op);
+
 int		is_operation(char *line);
 int		is_empty_line(char *line);
 int		is_label(char *str);
-int		get_operation_code(char *line);
 int		is_arg_first_char(char *line, int i);
-void	set_data_in_nodes(t_env *env);
+int     is_input_correct(char *s);
 int		is_args_octet_present(int op);
+int		is_label_operation_in_same_line(char *line);
+
 unsigned char	set_args_octet(char *line);
+void    organize_beginning_data(t_env *env);
+void	tokenize_data(t_env *env);
+void	translate_data_to_bytes(t_env *env);
+void	write_initial_data(t_env *env);
 
 
-
-// int		get_arguments_size(char *line, int opr);
-int		get_operation_size(t_env *env, char *line);
 
 #endif  

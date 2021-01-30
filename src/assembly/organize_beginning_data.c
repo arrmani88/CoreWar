@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_name_comment.c                              :+:      :+:    :+:   */
+/*   organize_beginning_data.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 10:14:49 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/29 14:49:53 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/30 11:41:25 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	set_champ_comment(t_env *env, char *str)
 	ft_strncpy(env->hdr.comment , &str[i], j - i);
 }
 
-void    set_initial_data(t_env *env)
+void    organize_beginning_data(t_env *env)
 {
 	char *line;
 
@@ -59,7 +59,7 @@ void    set_initial_data(t_env *env)
 		}
 	}
 }
-
+/*******************************************************************************/
 void	write_initial_data(t_env *env)
 {
 	int null;
