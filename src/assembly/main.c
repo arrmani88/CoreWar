@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:35 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/30 12:18:27 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/30 18:30:27 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,81 +30,17 @@ void	initialize_variables(t_env **env)
 
 int     main(int ac, char **av)
 {
-	// t_env *env;
+	t_env *env;
 
-	// if (ac > 1 || 1)
-	// {
-	// 	initialize_variables(&env);
-	// 	if (!open_file("qwer.s", env))
-	// 		return (-1);
-	// 	organize_beginning_data(env);
-	// 	tokenize_data(env);
-	// 	/* is_input_correct() */
-	// 	translate_data_to_bytes(env);
-	// }
-	int n = is_label_operation_in_same_line("zzzz:	ld	\%368,r2");
-	// int n = is_label_operation_in_same_line("looooop:  sti r1, \%:live, \%1");
-	printf(".:%d:.\n", n);
-
-	return (0);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/************************************/
-	
-int     getLastDotIndex(char *s)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = -1;
-	while (s[i])
+	if (ac > 1 || 1)
 	{
-		if (s[i] == '.')
-			j = i;
-		i++;
+		initialize_variables(&env);
+		if (!open_file("qwer.s", env))
+			return (-1);
+		organize_beginning_data(env);
+		tokenize_data(env);
+		/* is_input_correct() */
+		translate_data_to_bytes(env);
 	}
-	return (j);
-}
-
-char *getFileName(char *s)
-{
-	int lastDot;
-	char *fileName;
-
-	fileName = NULL;
-	lastDot = getLastDotIndex(s);
-	fileName = ft_strjoin(ft_strsub(s, 0, getLastDotIndex(s)), ".cor");
-	return (fileName);
-}
-
-int	create_file(char *s, t_env *env)
-{
-	char *exec_name;
-
-	exec_name = getFileName(s);
-	ft_putstr("Writing output program to ");
-	ft_putstr(exec_name);
-	ft_putendl(" ...");
-	env->dst_file = open(exec_name, O_WRONLY | O_CREAT | O_TRUNC , 0644);
 	return (0);
 }

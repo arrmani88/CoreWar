@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:57 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/30 11:58:52 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/30 16:34:20 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 
 typedef struct	s_data
 {
-	char *line;
-	int		current_octets;
-	struct s_data *next;
+	char			*line;
+	int				current_octets;
+	struct s_data	*next;
 }				t_data;
 
 typedef struct s_label
@@ -38,16 +38,15 @@ typedef struct s_label
 	struct s_label	*next;
 }				t_label;
 
-
 typedef struct		s_opr
 {
 	char	*line;
 	char	opr_code;
 	char	enc_octet;
 
-	int		arg1;
-	int		arg2;
-	int		arg3;
+	unsigned int	arg1;
+	unsigned int	arg2;
+	unsigned int	arg3;
 	
 	int		opr_size;
 	struct s_opr	*next;
@@ -84,11 +83,11 @@ int		is_args_octet_present(int op);
 int		is_label_operation_in_same_line(char *line);
 
 unsigned char	set_args_octet(char *line);
+int		create_file(char *s, t_env *env);
 void    organize_beginning_data(t_env *env);
 void	tokenize_data(t_env *env);
 void	translate_data_to_bytes(t_env *env);
 void	write_initial_data(t_env *env);
-
 
 
 #endif  

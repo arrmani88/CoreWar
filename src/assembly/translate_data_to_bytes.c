@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 09:20:59 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/30 12:03:06 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/30 18:25:46 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,43 @@ unsigned char	set_args_octet(char *line)
 	return (oct);
 }
 
-void	fill_node_by_operation(t_opr *opr, char *line)
+int	get_label_position(char *line)
+{
+	t_label *lbl;
+	int i;
+
+	i = -1;
+	while (line[++i] && is_char_in_str(line[i], LABEL_CHARS))
+		;
+	while (lbl)
+	{
+		if (ft_strncmp(line, lbl->label_name, i) == 0)
+			return (lbl->label_position);
+		lbl = lbl->next;
+	}
+	return (0);
+}
+
+unsigned int	get_argument_value(char *line, int i, t_data *data)
+{
+	unsigned int value;
+	
+	value = 0;
+	if (line[i] == ':' || (line[i] == '%' && line[i+1] == ':'))
+	{
+		i++;
+		value = (unsigned int)(data->current_octets - get_label_position(&line[i]));
+	}
+	else if (line[i] == 'r' || line[i] == '%' || ft_isdigit(line[i]))
+	{
+		if (line[i] == 'r' || line[i] == '%')
+			i++;
+		value = (unsigned int)ft_atoi(&line[i]);
+	}
+	return (value);
+}	
+
+void	fill_node_by_operation(t_opr *opr, char *line, t_data *data)
 {
 	int i;
 
@@ -43,8 +79,19 @@ void	fill_node_by_operation(t_opr *opr, char *line)
 		opr->enc_octet = set_args_octet(&line[i]);
 	while (line[++i] && !IS_SPACE(line[i]))
 		;
-	++i;
-
+	while (line[++i] && IS_SPACE(line[i]))
+		;
+	opr->arg1 = get_argument_value(line, i, data);
+	while (line[i] && line[i] != SEPARATOR_CHAR)
+		i++;
+	while (line[i] && IS_SPACE(line[i]))
+		i++;
+	opr->arg2 = get_argument_value(line, i, data);
+	while (line[i] && line[i] != SEPARATOR_CHAR)
+		i++;
+	while (line[i] && IS_SPACE(line[i]))
+		i++;
+	opr->arg3 = get_argument_value(line, i, data);
 }
 
 t_opr	*get_current_opr_node(t_env *env, t_opr *opr)
@@ -74,7 +121,7 @@ void	translate_data_to_bytes(t_env *env)
 		if (is_operation(data->line) || (i = is_label_operation_in_same_line(data->line)))
 		{
 			opr = get_current_opr_node(env, opr);
-			fill_node_by_operation(opr, &(data->line)[i]);
+			fill_node_by_operation(opr, &(data->line)[i], data);
 		}
 		data = data->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 11:24:14 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/30 11:46:50 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/30 19:27:53 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,30 @@ int		get_t_dir_size(int op)
 					|| op == 7 || op == 8 || op == 13 || op == 16) ? 4 : 2);
 }
 
+// int		sssssget_nex(char *line, int i)
+// {
+// 	while (line[i] && !IS_COMMENT_CHAR(line[i]))
+// 	{
+// 		if (is_arg_first_char(line, i))
+// 			return (i);
+// 		i++;
+// 	}
+// 	if (IS_COMMENT_CHAR(line[i]))
+// 		return (-1);
+// 	return (-2);
+// }
 int		get_next_argum_index(char *line, int i)
 {
-	while (line[i] && !IS_COMMENT_CHAR(line[i]))
-	{
-		if (is_arg_first_char(line, i))
-			return (i);
+printf("<<%s>>  %d\n",line, i);
+
+	while (line[i] && line[i] != SEPARATOR_CHAR)
 		i++;
-	}
-	if (IS_COMMENT_CHAR(line[i]))
-		return (-1);
-	return (-2);
+	i++;
+	while (IS_SPACE(line[i]))
+		i++;
+	if (is_arg_first_char(line, i))
+		return (i);
+	return (-1);
 }
 
 int		get_all_arguments_size(char *line, int opr)
@@ -54,12 +67,13 @@ int		get_all_arguments_size(char *line, int opr)
 		;
 	if (IS_SPACE(line[i]))
 		i++;
-	while (line[i] && !IS_COMMENT_CHAR(line[i]))
+	while (i >= 0 && line[i] && !IS_COMMENT_CHAR(line[i]))
 	{
 		argums_size += get_this_arg_size(line, i, opr);
-		i = get_next_argum_index(line, i+1);
-		if (i < 0)
-			break ;
+		printf("%d  ", i);
+		i = get_next_argum_index(line, i);
+		// if (i < 0)
+		// 	break ;
 	}
 	return (argums_size);
 }
