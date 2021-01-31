@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 11:24:14 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/30 19:27:53 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/31 16:15:19 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ int		get_t_dir_size(int op)
 // }
 int		get_next_argum_index(char *line, int i)
 {
-printf("<<%s>>  %d\n",line, i);
-
 	while (line[i] && line[i] != SEPARATOR_CHAR)
 		i++;
 	i++;
@@ -70,7 +68,6 @@ int		get_all_arguments_size(char *line, int opr)
 	while (i >= 0 && line[i] && !IS_COMMENT_CHAR(line[i]))
 	{
 		argums_size += get_this_arg_size(line, i, opr);
-		printf("%d  ", i);
 		i = get_next_argum_index(line, i);
 		// if (i < 0)
 		// 	break ;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   translate_data_to_bytes.c                          :+:      :+:    :+:   */
+/*   translate_data_to_code.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 09:20:59 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/30 18:25:46 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/31 16:22:44 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ unsigned char	set_args_octet(char *line)
 	return (oct);
 }
 
-int	get_label_position(char *line)
+int	get_label_position(char *line, t_env *env)
 {
 	t_label *lbl;
 	int i;
@@ -40,6 +40,7 @@ int	get_label_position(char *line)
 	i = -1;
 	while (line[++i] && is_char_in_str(line[i], LABEL_CHARS))
 		;
+	lbl = env->label;
 	while (lbl)
 	{
 		if (ft_strncmp(line, lbl->label_name, i) == 0)
@@ -49,15 +50,15 @@ int	get_label_position(char *line)
 	return (0);
 }
 
-unsigned int	get_argument_value(char *line, int i, t_data *data)
+unsigned int	get_argument_value(char *line, int i, t_data *data, t_env *env)
 {
 	unsigned int value;
 	
 	value = 0;
-	if (line[i] == ':' || (line[i] == '%' && line[i+1] == ':'))
+	if (line[i] == ':' || (line[i] == '%' && line[i+1] == ':' && ++i))
 	{
 		i++;
-		value = (unsigned int)(data->current_octets - get_label_position(&line[i]));
+		value = (unsigned int)(data->current_octets - get_label_position(&line[i], env));
 	}
 	else if (line[i] == 'r' || line[i] == '%' || ft_isdigit(line[i]))
 	{
@@ -66,9 +67,9 @@ unsigned int	get_argument_value(char *line, int i, t_data *data)
 		value = (unsigned int)ft_atoi(&line[i]);
 	}
 	return (value);
-}	
+}
 
-void	fill_node_by_operation(t_opr *opr, char *line, t_data *data)
+void	fill_node_by_operation(t_opr *opr, char *line, t_data *data, t_env *env)
 {
 	int i;
 
@@ -81,17 +82,23 @@ void	fill_node_by_operation(t_opr *opr, char *line, t_data *data)
 		;
 	while (line[++i] && IS_SPACE(line[i]))
 		;
-	opr->arg1 = get_argument_value(line, i, data);
+	opr->arg1 = get_argument_value(line, i, data, env);
 	while (line[i] && line[i] != SEPARATOR_CHAR)
 		i++;
+	i++;
 	while (line[i] && IS_SPACE(line[i]))
 		i++;
-	opr->arg2 = get_argument_value(line, i, data);
+	opr->arg2 = get_argument_value(line, i, data, env);
 	while (line[i] && line[i] != SEPARATOR_CHAR)
 		i++;
+	i++;
 	while (line[i] && IS_SPACE(line[i]))
 		i++;
-	opr->arg3 = get_argument_value(line, i, data);
+	opr->arg3 = get_argument_value(line, i, data, env);
+	 
+	/*asp*/
+	opr->line = line;
+	opr->opr_size = get_operation_size(env, line);
 }
 
 t_opr	*get_current_opr_node(t_env *env, t_opr *opr)
@@ -108,7 +115,7 @@ t_opr	*get_current_opr_node(t_env *env, t_opr *opr)
 	}
 }
 
-void	translate_data_to_bytes(t_env *env)
+void	translate_data_to_code(t_env *env)
 {
 	t_data			*data;
 	t_opr			*opr;
@@ -121,12 +128,8 @@ void	translate_data_to_bytes(t_env *env)
 		if (is_operation(data->line) || (i = is_label_operation_in_same_line(data->line)))
 		{
 			opr = get_current_opr_node(env, opr);
-			fill_node_by_operation(opr, &(data->line)[i], data);
+			fill_node_by_operation(opr, &(data->line)[i], data, env);
 		}
 		data = data->next;
 	}
-
-
-
-
 }

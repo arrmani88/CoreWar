@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 10:14:49 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/30 11:41:25 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/31 16:27:24 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,18 @@ void    organize_beginning_data(t_env *env)
 	}
 }
 /*******************************************************************************/
-void	write_initial_data(t_env *env)
+
+void	write_bgn_data(t_env *env)
+{
+	
+}
+
+void	write_beginning_data(t_env *env)
 {
 	int null;
 
 	null = 0;
+	organize_beginning_data(env);
 	write(env->dst_file, &(env->hdr.magic), 4);
 	write(env->dst_file, &(env->hdr.prog_name), PROG_NAME_LENGTH);
 	write(env->dst_file, &null, 4);

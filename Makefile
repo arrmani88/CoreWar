@@ -18,11 +18,12 @@ ASSEMBLY_FILES = is_input_correct.c\
 				op.c\
 				organize_beginning_data.c\
 				tokenize_data.c\
-				translate_data_to_bytes.c\
+				translate_data_to_code.c\
 				analyze_line.c\
 				get_operation_info.c\
 				get_arguments_info.c\
-				create_file.c
+				create_file.c\
+				write_bytecode.c
 
 OBJ_ASSEMBLY = $(addprefix $(OBJ_DIR)/, $(ASSEMBLY_FILES:%.c=%.o))
 

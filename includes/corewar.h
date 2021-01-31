@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:57 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/30 16:34:20 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/31 16:24:04 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 
 #define IS_SPACE(X) (X == ' ' || X == '\t')
 #define	IS_COMMENT_CHAR(X) (X == ALT_COMMENT_CHAR || X == COMMENT_CHAR)
+#define	BGN_DATA (4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4)
+/* HEADER + NAME + NULL + EXEC_SZ + COMMENT + NULL */
 
 typedef struct	s_data
 {
@@ -42,7 +44,7 @@ typedef struct		s_opr
 {
 	char	*line;
 	char	opr_code;
-	char	enc_octet;
+	unsigned char	enc_octet;
 
 	unsigned int	arg1;
 	unsigned int	arg2;
@@ -61,6 +63,8 @@ typedef struct	s_env
 	t_label		*label;
 	t_label		*lbl;
 	t_opr		*opr;
+	char		*bgn_data;
+	char		*champion;
 	int			src_file;
 	int			dst_file;
 	int			current_size;
@@ -86,8 +90,8 @@ unsigned char	set_args_octet(char *line);
 int		create_file(char *s, t_env *env);
 void    organize_beginning_data(t_env *env);
 void	tokenize_data(t_env *env);
-void	translate_data_to_bytes(t_env *env);
-void	write_initial_data(t_env *env);
+void	translate_data_to_code(t_env *env);
+void	write_beginning_data(t_env *env);
 
 
 #endif  

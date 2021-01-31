@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 09:18:26 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/30 19:41:10 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/01/31 14:45:08 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ int		is_operation(char *line)
 
 	i = get_first_char_index(line);
 	if (!get_operation_code(&line[i]))
+		return (0);
+	while (line[++i] && !IS_SPACE(line[i]))
+		;
+	if (line[i-1] == LABEL_CHAR)
 		return (0);
 	return (1);
 }
