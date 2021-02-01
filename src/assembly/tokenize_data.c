@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 09:12:14 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/30 18:42:11 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/02/01 12:09:33 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ void	tokenize_data(t_env *env)
 	while (get_next_line(env->src_file, &line))
 	{
 		save_line(env, line, &current_bytes);
+		/***/
 	}
 }

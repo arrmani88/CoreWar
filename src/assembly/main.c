@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:35 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/31 19:31:39 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/02/01 12:10:13 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	open_file(char *s, t_env *env)
 	return (1);
 }
 
-void	initialize_variables(t_env **env)
+void	allocate_variables(t_env **env)
 {
 	(*env) = (t_env *)ft_memalloc(sizeof(t_env));
 	(*env)->data = (t_data *)ft_memalloc(sizeof(t_data));
@@ -37,7 +37,7 @@ int     main(int ac, char **av)
 	char *p = "qwer.s";
 	if (ac > 1 || 1)
 	{
-		initialize_variables(&env);
+		allocate_variables(&env);
 		if (!open_file(p, env))
 			return (-1);
 		organize_beginning_data(env);

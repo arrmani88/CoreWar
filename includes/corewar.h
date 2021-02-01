@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:57 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/31 16:24:04 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/02/01 08:51:15 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct	s_env
 	int			src_file;
 	int			dst_file;
 	int			current_size;
+	int			i;
 }				t_env;
 
 
@@ -77,6 +78,7 @@ int		get_current_argument_code(char *line);
 int		get_operation_size(t_env *env, char *line);
 int		get_all_arguments_size(char *line, int opr);
 int		get_this_arg_size(char *line, int i, int op);
+int		get_t_dir_size(int op);
 
 int		is_operation(char *line);
 int		is_empty_line(char *line);
@@ -92,6 +94,7 @@ void    organize_beginning_data(t_env *env);
 void	tokenize_data(t_env *env);
 void	translate_data_to_code(t_env *env);
 void	write_beginning_data(t_env *env);
+void	write_bytecode_in_file(t_env *env);
 
 
 #endif  
