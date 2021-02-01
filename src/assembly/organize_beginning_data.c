@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 10:14:49 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/02/01 12:17:25 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/02/01 12:23:10 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void    organize_beginning_data(t_env *env)
 			(COREWAR_EXEC_MAGIC<<8&0xff0000) | (COREWAR_EXEC_MAGIC>>8&0xff00);
 	while(get_next_line(env->src_file, &line) > 0)
 	{
-		if (str_begins_with(line, NAME_CMD_STRING))
+		if (str_begins_with(line, NAME_CMD_STRING) /* && check error including name*/)
 			set_champ_name(env, line);
 		else if (str_begins_with(line, COMMENT_CMD_STRING))
 		{

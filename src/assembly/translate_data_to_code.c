@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 09:20:59 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/02/01 10:00:56 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/02/01 18:51:02 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,15 @@ unsigned int	get_argument_value(char *line, int i, t_data *data, t_env *env)
 {
 	unsigned int	value;
 	int				label_pos;
-	
+
 	value = 0;
 	if (line[i] == ':' || (line[i] == '%' && line[i+1] == ':' && ++i))
 	{
 		i++;
 		label_pos = get_label_position(&line[i], env);
-		value = (unsigned int)(label_pos > data->current_octets ? 
-			(data->current_octets + label_pos) : (data->current_octets - label_pos));
-		
+		value = (label_pos > data->current_octets ? 
+			(data->current_octets + label_pos) : (label_pos - data->current_octets));
+// printf("lbl=%d ≠ curr=%d=%d\n", label_pos, data->current_octets, value);
 	}
 	else if (line[i] == 'r' || line[i] == '%' || ft_isdigit(line[i]))
 	{
@@ -72,7 +72,6 @@ unsigned int	get_argument_value(char *line, int i, t_data *data, t_env *env)
 	}
 	return (value);
 }
-		// printf("\n%d-%d=%d\n", data->current_octets, get_label_position(&line[i], env), value);
 
 void	fill_node_by_operation(t_opr *opr, char *line, t_data *data, t_env *env)
 {

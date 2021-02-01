@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 11:24:14 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/31 16:15:19 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/02/01 17:23:47 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ int		get_t_dir_size(int op)
 // 		return (-1);
 // 	return (-2);
 // }
+
 int		get_next_argum_index(char *line, int i)
 {
 	while (line[i] && line[i] != SEPARATOR_CHAR)
 		i++;
-	i++;
-	while (IS_SPACE(line[i]))
+	line[i] == SEPARATOR_CHAR ? i++ : 0;
+	while (line[i] && IS_SPACE(line[i]))
 		i++;
 	if (is_arg_first_char(line, i))
 		return (i);
@@ -69,8 +70,6 @@ int		get_all_arguments_size(char *line, int opr)
 	{
 		argums_size += get_this_arg_size(line, i, opr);
 		i = get_next_argum_index(line, i);
-		// if (i < 0)
-		// 	break ;
 	}
 	return (argums_size);
 }

@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 11:22:36 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/31 12:57:32 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/02/01 17:23:55 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		get_operation_size(t_env *env, char *line)
 	int i;
 	int opr_code;
 	int	opr_size;
-
+	
 	opr_size = 1;
 	i = get_first_char_index(line);
 	opr_code = get_operation_code(&line[i]);
