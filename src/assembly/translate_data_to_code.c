@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 09:20:59 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/02/01 18:51:02 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/02/02 12:47:48 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,23 @@ unsigned char	set_args_octet(char *line)
 	unsigned char	oct;
 	int				i;
 	int				shf;
+	int				first_arg;
 
 	oct = 0;
-	i = -1;
 	shf = 6;
-	while (line[++i] && shf)
+	first_arg = get_operation_len(line);
+	while (IS_SPACE(line[first_arg]))
+		first_arg++;
+	i = first_arg;
+	while (line[i] && shf)
 	{
-		if (is_arg_first_char(line, i))
+		// if (is_arg_first_char(line, i))
+		if (i == first_arg || ((line[i-1] == SEPARATOR_CHAR || IS_SPACE(line[i-1])) && is_arg_first_char(line, i)))
 		{
 			oct = oct | (get_current_argument_code(&line[i]) << shf);
 			shf -= 2;
 		}
+		i++;
 	}
 	return (oct);
 }
@@ -43,7 +49,7 @@ int	get_label_position(char *line, t_env *env)
 	lbl = env->label;
 	while (lbl)
 	{
-		if (ft_strncmp(line, lbl->label_name, i) == 0)
+		if (ft_strncmp(line, lbl->label_name, i) == 0 && lbl->label_name[i] == 0)
 			return (lbl->label_position);
 		lbl = lbl->next;
 	}
@@ -60,8 +66,8 @@ unsigned int	get_argument_value(char *line, int i, t_data *data, t_env *env)
 	{
 		i++;
 		label_pos = get_label_position(&line[i], env);
-		value = (label_pos > data->current_octets ? 
-			(data->current_octets + label_pos) : (label_pos - data->current_octets));
+		value = label_pos - data->current_octets;
+		// value = (label_pos > data->current_octets ? (label_pos - data->current_octets) : (-(label_pos - data->current_octets)));
 // printf("lbl=%d ≠ curr=%d=%d\n", label_pos, data->current_octets, value);
 	}
 	else if (line[i] == 'r' || line[i] == '%' || ft_isdigit(line[i]))

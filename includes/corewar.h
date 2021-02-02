@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:57 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/02/01 08:51:15 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/02/02 12:20:18 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,13 @@ typedef struct	s_env
 	int			dst_file;
 	int			current_size;
 	int			i;
+
+	int			sup;
 }				t_env;
 
 
 int		get_operation_code(char *line);
+int		get_operation_len(char *line);
 int		get_first_char_index(char *str);
 int		get_current_argument_code(char *line);
 int		get_operation_size(t_env *env, char *line);

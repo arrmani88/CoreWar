@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 15:26:06 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/02/01 19:37:18 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/02/02 11:33:47 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	write_octets(t_env *env, unsigned int num, int size)
 {
 	while (size >= 0)
 	{
-		printf(" %02x ", (unsigned char)((num & (0xff << (size * 8))) >> (size * 8)));
+		printf("%02x ", (unsigned char)((num & (0xff << (size * 8))) >> (size * 8)));
 		env->champion[env->i] = (unsigned char)((num & (0xff << (size * 8))) >> (size * 8));
 		size--;
 		(env->i)++;
@@ -42,7 +42,7 @@ int		get_arg_size(t_opr *opr, int shft)
 
 void	write_operation(t_env *env, t_opr *opr)
 {
-	printf("%s|\n", opr->line);
+	printf("\033[0;32m %s|\t[%d]\033[0;37m\n", opr->line, env->sup);
 	write_octets(env, opr->opr_code, sizeof(opr->opr_code) - 1);
 	if (is_args_octet_present(opr->opr_code))
 		write_octets(env, opr->enc_octet, sizeof(opr->enc_octet) - 1);
@@ -62,7 +62,7 @@ void	write_bytecode_in_file(t_env *env)
 
 	write_beginning_data(env);
 	opr = env->opr;
-	while (opr)
+	while (opr && ++(env->sup))
 	{
 		write_operation(env, opr);
 		opr = opr->next;

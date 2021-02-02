@@ -21,7 +21,7 @@ tirf:	live	%42
 	fork	%:tirf
 	live	%42
 	sti	r10,%-510,%0
-	sti	r10,%-404,%0
+	sti r10,%-404,%0
 	sti	r10,%-303,%0
 	sti	r10,%-202,%0
 	ld	%0,r11
