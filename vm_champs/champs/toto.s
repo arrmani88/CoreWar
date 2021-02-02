@@ -33,7 +33,7 @@ avantdebt:	sti   r1,%:code,%1  # 		# mets a jour le live
 		sti   r1,%:code,%43 # 		# mets a jour le live
 		sti   r1,%:code,%57 # 		# mets a jour le live
 		sti   r1,%:code,%71 # 		# mets a jour le live
-init:		ld   %393216,r4		 	#7	
+init:		ld   %393216,r4		 	#7
 		ld   %917504,r12		#7	
 		ld   %1,r11			#7
 		ld   %6,r10			#7
@@ -73,6 +73,3 @@ level100:	live %42
 		ld   %-194,r14			# $A -6 -0
 		ld   %0,r2			#
 		zjmp %:label			#
-
-
-

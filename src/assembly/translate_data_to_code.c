@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 09:20:59 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/02/02 12:47:48 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/02/02 19:15:20 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ unsigned char	set_args_octet(char *line)
 	while (line[i] && shf)
 	{
 		// if (is_arg_first_char(line, i))
-		if (i == first_arg || ((line[i-1] == SEPARATOR_CHAR || IS_SPACE(line[i-1])) && is_arg_first_char(line, i)))
+		if (i == first_arg || 
+	((line[i-1] == SEPARATOR_CHAR || IS_SPACE(line[i-1])) && is_arg_first_char(line, i)))
 		{
 			oct = oct | (get_current_argument_code(&line[i]) << shf);
 			shf -= 2;
@@ -70,7 +71,7 @@ unsigned int	get_argument_value(char *line, int i, t_data *data, t_env *env)
 		// value = (label_pos > data->current_octets ? (label_pos - data->current_octets) : (-(label_pos - data->current_octets)));
 // printf("lbl=%d ≠ curr=%d=%d\n", label_pos, data->current_octets, value);
 	}
-	else if (line[i] == 'r' || line[i] == '%' || ft_isdigit(line[i]))
+	else if (line[i] == 'r' || line[i] == '%' || line[i] == '-' || ft_isdigit(line[i]))
 	{
 		if (line[i] == 'r' || line[i] == '%')
 			i++;
@@ -118,11 +119,8 @@ t_opr	*get_current_opr_node(t_env *env, t_opr *opr)
 		env->opr = (t_opr *)ft_memalloc(sizeof(t_opr));
 		return (env->opr);
 	}
-	else
-	{
-		opr->next = (t_opr *)ft_memalloc(sizeof(t_opr));
-		return (opr->next);
-	}
+	opr->next = (t_opr *)ft_memalloc(sizeof(t_opr));
+	return (opr->next);
 }
 
 void	translate_data_to_code(t_env *env)
@@ -134,9 +132,12 @@ void	translate_data_to_code(t_env *env)
 	data = env->data;
 	while (data)
 	{
+		++(env->sup);
 		i = 0;
 		if (is_operation(data->line) || (i = is_label_operation_in_same_line(data->line)))
 		{
+			if (env->sup == 25)
+				1;
 			opr = get_current_opr_node(env, opr);
 			fill_node_by_operation(opr, &(data->line)[i], data, env);
 		}
