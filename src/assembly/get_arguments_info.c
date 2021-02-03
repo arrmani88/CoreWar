@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 11:24:14 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/02/02 19:17:22 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/02/03 08:40:10 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		get_t_dir_size(int op)
 
 int		get_next_argum_index(char *line, int i)
 {
-	while (line[i] && line[i] != SEPARATOR_CHAR)
+	while (line[i] && line[i] != SEPARATOR_CHAR && !IS_COMMENT_CHAR(line[i]))
 		i++;
 	line[i] == SEPARATOR_CHAR ? i++ : 0;
 	while (line[i] && IS_SPACE(line[i]))

@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 09:12:14 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/02/02 14:39:21 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/02/03 12:23:43 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		is_label_operation_in_same_line(char *line)
 	int i;
 
 	i = 0;
-	while (line[i] && line[i] != LABEL_CHAR)
+	while (line[i] && !IS_COMMENT_CHAR(line[i]) && line[i] != LABEL_CHAR)
 		i++;
 	line[i] == LABEL_CHAR ? i++ : 0;
 	while (IS_SPACE(line[i]))
@@ -66,12 +66,10 @@ void	save_line(t_env *env, char *line, int *current_bytes)
 	{
 		save_label_position(line, *current_bytes, env);
 		if ((i = is_label_operation_in_same_line(line)) > 0)
-			*current_bytes += get_operation_size(env, &line[i]);
+			*current_bytes += get_operation_size(&line[i]);
 	}
 	else if (is_operation(line))
-	{
-		*current_bytes += get_operation_size(env, line);
-	}
+		*current_bytes += get_operation_size(line);
 }
 
 void	tokenize_data(t_env *env)

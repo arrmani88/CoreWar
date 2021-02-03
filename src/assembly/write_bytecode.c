@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 15:26:06 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/02/02 19:05:19 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/02/03 11:37:28 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ void	write_bytecode_in_file(t_env *env)
 
 	write_beginning_data(env);
 	opr = env->opr;
-	while (opr && ++(env->sup))
+	while (opr)
 	{
+		++(env->sup); /* asp */
 		write_operation(env, opr);
 		opr = opr->next;
 	}

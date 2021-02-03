@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 09:20:59 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/02/02 19:15:20 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/02/03 11:37:02 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ unsigned char	set_args_octet(char *line)
 	while (IS_SPACE(line[first_arg]))
 		first_arg++;
 	i = first_arg;
-	while (line[i] && shf)
+	while (line[i] && shf && !IS_COMMENT_CHAR(line[i]))
 	{
 		// if (is_arg_first_char(line, i))
 		if (i == first_arg || 
@@ -109,7 +109,7 @@ void	fill_node_by_operation(t_opr *opr, char *line, t_data *data, t_env *env)
 	 
 	/*asp*/
 	opr->line = line;
-	opr->opr_size = get_operation_size(env, line);
+	opr->opr_size = get_operation_size(line);
 }
 
 t_opr	*get_current_opr_node(t_env *env, t_opr *opr)
@@ -132,12 +132,10 @@ void	translate_data_to_code(t_env *env)
 	data = env->data;
 	while (data)
 	{
-		++(env->sup);
 		i = 0;
 		if (is_operation(data->line) || (i = is_label_operation_in_same_line(data->line)))
 		{
-			if (env->sup == 25)
-				1;
+			++(env->sup);		/* asp */
 			opr = get_current_opr_node(env, opr);
 			fill_node_by_operation(opr, &(data->line)[i], data, env);
 		}
