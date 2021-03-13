@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 12:26:57 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/02/03 09:17:40 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/03/13 17:11:11 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@
 #define	BGN_DATA (4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4)
 /* HEADER + NAME + NULL + EXEC_SZ + COMMENT + NULL */
 
+
+
+
+
+
 typedef struct	s_data
 {
 	int				current_octets;
@@ -42,7 +47,7 @@ typedef struct s_label
 
 typedef struct		s_opr
 {
-	char	*line;
+	// char	*line;
 	char	opr_code;
 	unsigned char	enc_octet;
 
@@ -74,6 +79,9 @@ typedef struct	s_env
 }				t_env;
 
 
+
+
+
 int		get_operation_code(char *line);
 int		get_operation_len(char *line);
 int		get_first_char_index(char *str);
@@ -98,6 +106,8 @@ void	tokenize_data(t_env *env);
 void	translate_data_to_code(t_env *env);
 void	write_beginning_data(t_env *env);
 void	write_bytecode_in_file(t_env *env);
+
+void	liberate_memory(t_env *env);
 
 
 #endif  

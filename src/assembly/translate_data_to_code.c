@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 09:20:59 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/02/03 11:37:02 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/03/06 15:11:21 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ unsigned int	get_argument_value(char *line, int i, t_data *data, t_env *env)
 		i++;
 		label_pos = get_label_position(&line[i], env);
 		value = label_pos - data->current_octets;
-		// value = (label_pos > data->current_octets ? (label_pos - data->current_octets) : (-(label_pos - data->current_octets)));
-// printf("lbl=%d ≠ curr=%d=%d\n", label_pos, data->current_octets, value);
 	}
 	else if (line[i] == 'r' || line[i] == '%' || line[i] == '-' || ft_isdigit(line[i]))
 	{
@@ -89,27 +87,33 @@ void	fill_node_by_operation(t_opr *opr, char *line, t_data *data, t_env *env)
 	opr->opr_code = get_operation_code(&line[i]);
 	if (is_args_octet_present(opr->opr_code))
 		opr->enc_octet = set_args_octet(&line[i]);
+/*#*/
 	while (line[++i] && !IS_SPACE(line[i]))
 		;
 	while (line[++i] && IS_SPACE(line[i]))
 		;
 	opr->arg1 = get_argument_value(line, i, data, env);
+/*#*/
 	while (line[i] && line[i] != SEPARATOR_CHAR)
 		i++;
-	i++;
+	if (line[i] == SEPARATOR_CHAR)
+		i++;
 	while (line[i] && IS_SPACE(line[i]))
 		i++;
 	opr->arg2 = get_argument_value(line, i, data, env);
+/*#*/
 	while (line[i] && line[i] != SEPARATOR_CHAR)
 		i++;
-	i++;
+	if (line[i] == SEPARATOR_CHAR)
+		i++;
 	while (line[i] && IS_SPACE(line[i]))
 		i++;
 	opr->arg3 = get_argument_value(line, i, data, env);
-	 
+/*#*/
+
 	/*asp*/
-	opr->line = line;
-	opr->opr_size = get_operation_size(line);
+	// opr->line = line; /*asp*/
+	opr->opr_size = get_operation_size(line); /*asp*/
 }
 
 t_opr	*get_current_opr_node(t_env *env, t_opr *opr)

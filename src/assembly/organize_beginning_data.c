@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 10:14:49 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/02/01 12:23:10 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/03/13 17:22:14 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void    set_champ_name(t_env *env, char *str)
 	while (str[++j] && str[j] != '"')
 		;
 	ft_strncpy(env->hdr.prog_name, &str[i], j - i);
+	ft_memdel((void **)&str);
 }
 
 void	set_champ_comment(t_env *env, char *str)
@@ -40,6 +41,7 @@ void	set_champ_comment(t_env *env, char *str)
 	while (str[++j] && str[j] != '"')
 		;
 	ft_strncpy(env->hdr.comment , &str[i], j - i);
+	ft_memdel((void **)&str);
 }
 
 void    organize_beginning_data(t_env *env)
@@ -48,6 +50,7 @@ void    organize_beginning_data(t_env *env)
 	// check erro name & comment
 	env->hdr.magic = ((COREWAR_EXEC_MAGIC&0xff)<<24) |
 			(COREWAR_EXEC_MAGIC<<8&0xff0000) | (COREWAR_EXEC_MAGIC>>8&0xff00);
+
 	while(get_next_line(env->src_file, &line) > 0)
 	{
 		if (str_begins_with(line, NAME_CMD_STRING) /* && check error including name*/)
@@ -57,9 +60,11 @@ void    organize_beginning_data(t_env *env)
 			set_champ_comment(env, line);
 			break ;
 		}
+		else
+			ft_memdel((void **)&line);
 	}
+	// ft_memdel((void **)&line); //added in 13 march
 }
-/*******************************************************************************/
 
 void	write_bgn_data(t_env *env)
 {

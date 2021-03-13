@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 15:26:06 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/02/03 11:37:28 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/03/06 14:43:30 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ void	write_octets(t_env *env, unsigned int num, int size)
 {
 	while (size >= 0)
 	{
-		printf("%02x ", (unsigned char)((num & (0xff << (size * 8))) >> (size * 8)));
+		// printf("%02x ", (unsigned char)((num & (0xff << (size * 8))) >> (size * 8)));
 		env->champion[env->i] = (unsigned char)((num & (0xff << (size * 8))) >> (size * 8));
 		size--;
 		(env->i)++;
 	}
-	printf("|");
+	// printf("|");
 }
 
 int		get_arg_size(t_opr *opr, int shft)
@@ -42,7 +42,8 @@ int		get_arg_size(t_opr *opr, int shft)
 
 void	write_operation(t_env *env, t_opr *opr)
 {
-	printf("\033[0;32m %s|\t[%d]\033[0;37m\n", opr->line, env->sup);
+	// printf("\033[0;32m %s|\t[%d]\033[0;37m\n", opr->line, env->sup);
+
 	write_octets(env, opr->opr_code, sizeof(opr->opr_code) - 1);
 	if (is_args_octet_present(opr->opr_code))
 		write_octets(env, opr->enc_octet, sizeof(opr->enc_octet) - 1);
@@ -53,7 +54,7 @@ void	write_operation(t_env *env, t_opr *opr)
 		write_octets(env, opr->arg2, get_arg_size(opr, 4) - 1);
 	if (opr->enc_octet & 0b00001100)
 		write_octets(env, opr->arg3, get_arg_size(opr, 2) - 1);
-printf("\n");
+// printf("\n");
 }
 
 void	write_bytecode_in_file(t_env *env)

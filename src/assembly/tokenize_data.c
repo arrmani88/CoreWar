@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 09:12:14 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/02/03 12:23:43 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/03/13 16:34:19 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	save_line(t_env *env, char *line, int *current_bytes)
 	env->dt->next = (t_data *)ft_memalloc(sizeof(t_data));
 	env->dt = env->dt->next;
 	env->dt->line = line;
-	
 	env->dt->current_octets = *current_bytes;	
 	if (is_label(line))
 	{
@@ -74,9 +73,9 @@ void	save_line(t_env *env, char *line, int *current_bytes)
 
 void	tokenize_data(t_env *env)
 {
-	char *line;
+	char	*line;
 	int		current_bytes;
-	int i;
+	int		i;
 
 	current_bytes = 0;
 	get_next_line(env->src_file, &line);
@@ -87,5 +86,6 @@ void	tokenize_data(t_env *env)
 		save_line(env, line, &current_bytes);
 		/***/
 	}
+	ft_memdel((void **)&line); // added in 13 march
 	// printf("\n");
 }

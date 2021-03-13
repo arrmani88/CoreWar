@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/03/06 10:42:59 by anel-bou          #+#    #+#              #
+#    Updated: 2021/03/06 10:47:34 by anel-bou         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = asm
 LIBFT_FILE = libft.a
 
@@ -23,7 +35,8 @@ ASSEMBLY_FILES = is_input_correct.c\
 				get_operation_info.c\
 				get_arguments_info.c\
 				create_file.c\
-				write_bytecode.c
+				write_bytecode.c\
+				liberate_memory.c
 
 OBJ_ASSEMBLY = $(addprefix $(OBJ_DIR)/, $(ASSEMBLY_FILES:%.c=%.o))
 

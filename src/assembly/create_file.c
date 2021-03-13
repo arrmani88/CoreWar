@@ -6,7 +6,7 @@
 /*   By: anel-bou <anel-bou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 14:39:21 by anel-bou          #+#    #+#             */
-/*   Updated: 2021/01/30 14:43:06 by anel-bou         ###   ########.fr       */
+/*   Updated: 2021/03/13 17:03:52 by anel-bou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ int		create_file(char *s, t_env *env)
 	ft_putstr(exec_name);
 	ft_putendl(" ...");
 	env->dst_file = open(exec_name, O_WRONLY | O_CREAT | O_TRUNC , 0644);
+	ft_memdel((void **)&exec_name);
 	return (0);
 }
